@@ -35,7 +35,8 @@ libraryDependencies ++= Seq(
     "org.scalatest" %% "scalatest" % "3.0.0" % "test",
     "org.scalacheck" %% "scalacheck" % "1.13.4" % "test",
 
-    "com.fasterxml.jackson.dataformat" % "jackson-dataformat-yaml" % "2.8.8"
+    "com.fasterxml.jackson.dataformat" % "jackson-dataformat-yaml" % "2.8.8",
+    "com.github.pathikrit" %% "better-files" % "3.0.0"
 )
 
 scalacOptions ++= Seq(
