@@ -8,9 +8,9 @@ organization := "org.nomadblacky"
 
 version := "0.1.0"
 
-scalaVersion := "2.12.0"
+scalaVersion := "2.12.2"
 
-crossScalaVersions := Seq("2.11.8", "2.12.0")
+crossScalaVersions := Seq("2.11.8", "2.12.2")
 
 resolvers ++= Seq(
   "Sonatype OSS Snapshots" at "http://oss.sonatype.org/content/repositories/snapshots/"
