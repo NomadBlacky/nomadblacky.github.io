@@ -1,0 +1,5 @@
+
+Usage
+
+> runMain org.nomadblacky.github.io.DeployBlogs TEMPLATE_FILE BLOGS_DIRECTORY
+
