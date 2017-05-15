@@ -28,8 +28,12 @@ object DeployBlogs {
     Source.fromURL(getClass.getResource("usage.txt")).getLines().mkString("\n")
   }
 
-  def buildBlogList(baseDir: File): String = {
-    "hoge"
+  def buildBlogList(baseDir: File, currentDir: File = File(".")): String = {
+    baseDir
+      .listRecursively
+      .filter(!_.isDirectory)
+      .map { f ⇒ s"+ [${f.name}](${currentDir.relativize(f).toString})" }
+      .mkString("\n")
   }
 
   def run(args: Array[String]): Unit = {
