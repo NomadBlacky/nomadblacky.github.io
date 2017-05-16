@@ -32,7 +32,8 @@ object DeployBlogs {
     baseDir
       .listRecursively
       .filter(!_.isDirectory)
-      .map { f ⇒ s"+ [${f.name}](${currentDir.relativize(f).toString})" }
+      .map { f ⇒ (f, f.lines.take(1).map(_.replaceAll("""^#+\s+""", ""))) }
+      .map { case (f, tr) ⇒ s"+ [${f.name} ${tr.mkString}](${currentDir.relativize(f).toString})" }
       .mkString("\n")
   }
 
