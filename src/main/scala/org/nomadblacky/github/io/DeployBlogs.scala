@@ -40,6 +40,7 @@ object DeployBlogs {
   def run(args: Array[String]): Unit = {
     val templateFile = getFile(args(0), false).get
     val blogsDir = getFile(args(1), true).get
+    val destDir = getFile(args(2), false).getOrElse(File("_build"))
 
     val markdown =
       templateFile.lines
