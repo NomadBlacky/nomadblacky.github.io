@@ -73,7 +73,7 @@ object DeployBlogs {
           .write(pegdown.markdownToHtml(from.lines.mkString("\n")))
     }
 
-    pairs.map(_._2).toList
+    pairs.map(_._2)
   }
 
   def run(args: Array[String]): Unit = {
