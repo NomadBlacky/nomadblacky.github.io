@@ -8,7 +8,14 @@ import org.scalatest.FunSuite
   */
 class InlineConfigSuite extends FunSuite {
 
-  test("Test InlineConfig.getStatement") {
+  val except = Seq(
+    """title: aaa""",
+    """value1 : bb bb""",
+    """value2 :123""",
+    """  value3:\\ddd//"""
+  )
+
+  test("Test InlineConfig.getStatement 01") {
     val source =
       """===config===
         |title: aaa
@@ -21,13 +28,23 @@ class InlineConfigSuite extends FunSuite {
         |foo
         |bar
       """.stripMargin
-    val except = Seq(
-      """title: aaa""",
-      """value1 : bb bb""",
-      """value2 :123""",
-      """  value3:\\ddd//"""
-    )
+    assert(InlineConfig.getStatement(source.split("\n")) == except)
+  }
 
+  test("Test InlneConfig.getStatement 02") {
+    val source =
+      """
+        |# hoge
+        |
+        |===config===
+        |title: aaa
+        |value1 : bb bb
+        |value2 :123
+        |  value3:\\ddd//
+        |===end config===
+        |foo
+        |bar
+      """.stripMargin
     assert(InlineConfig.getStatement(source.split("\n")) == except)
   }
 }
