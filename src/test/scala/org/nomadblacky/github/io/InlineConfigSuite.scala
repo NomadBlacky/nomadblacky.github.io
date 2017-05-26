@@ -8,7 +8,34 @@ import org.scalatest.FunSuite
   */
 class InlineConfigSuite extends FunSuite {
 
-  val except = Seq(
+  val source1 =
+    """===config===
+      |title: aaa
+      |value1 : bb bb
+      |value2 :123
+      |  value3:\\ddd//
+      |===end config===
+      |# hoge
+      |
+      |foo
+      |bar
+    """.stripMargin
+
+  val source2 =
+    """
+      |# hoge
+      |
+      |===config===
+      |title: aaa
+      |value1 : bb bb
+      |value2 :123
+      |  value3:\\ddd//
+      |===end config===
+      |foo
+      |bar
+    """.stripMargin
+
+  val exceptStatement = Seq(
     """title: aaa""",
     """value1 : bb bb""",
     """value2 :123""",
@@ -16,35 +43,13 @@ class InlineConfigSuite extends FunSuite {
   )
 
   test("Test InlineConfig.getStatement 01") {
-    val source =
-      """===config===
-        |title: aaa
-        |value1 : bb bb
-        |value2 :123
-        |  value3:\\ddd//
-        |===end config===
-        |# hoge
-        |
-        |foo
-        |bar
-      """.stripMargin
-    assert(InlineConfig.getStatement(source.split("\n")) == except)
+    assert(InlineConfig.getStatement(source1.split("\n")) == exceptStatement)
   }
 
   test("Test InlneConfig.getStatement 02") {
-    val source =
-      """
-        |# hoge
-        |
-        |===config===
-        |title: aaa
-        |value1 : bb bb
-        |value2 :123
-        |  value3:\\ddd//
-        |===end config===
-        |foo
-        |bar
-      """.stripMargin
-    assert(InlineConfig.getStatement(source.split("\n")) == except)
+    assert(InlineConfig.getStatement(source2.split("\n")) == exceptStatement)
+  }
+
+  test("Test InlineConfig.read 01") {
   }
 }
