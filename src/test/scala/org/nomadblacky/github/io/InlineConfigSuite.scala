@@ -42,6 +42,13 @@ class InlineConfigSuite extends FunSuite {
     """  value3:\\ddd//"""
   )
 
+  val exceptConfig = Map(
+    "title" -> "aaa",
+    "value1" -> "bb bb",
+    "value2" -> "123",
+    "value3" -> """\\ddd//"""
+  )
+
   test("Test InlineConfig.getStatement 01") {
     assert(InlineConfig.getStatement(source1.split("\n")) == exceptStatement)
   }
@@ -51,5 +58,6 @@ class InlineConfigSuite extends FunSuite {
   }
 
   test("Test InlineConfig.read 01") {
+    assert(InlineConfig.read(source1.split("\n")).get == exceptConfig)
   }
 }
