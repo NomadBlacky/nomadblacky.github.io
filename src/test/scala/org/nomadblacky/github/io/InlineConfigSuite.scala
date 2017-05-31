@@ -43,10 +43,10 @@ class InlineConfigSuite extends FunSuite {
   )
 
   val exceptConfig = Map(
-    "title" -> "aaa",
-    "value1" -> "bb bb",
-    "value2" -> "123",
-    "value3" -> """\\ddd//"""
+    "title"  -> InlineConfig("title", "aaa"),
+    "value1" -> InlineConfig("value1", "bb bb"),
+    "value2" -> InlineConfig("value2", "123"),
+    "value3" -> InlineConfig("value3", """\\ddd//""")
   )
 
   test("Test InlineConfig.getStatement 01") {
