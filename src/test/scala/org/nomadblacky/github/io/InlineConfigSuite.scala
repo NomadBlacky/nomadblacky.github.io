@@ -8,7 +8,7 @@ import org.scalatest.FunSuite
   */
 class InlineConfigSuite extends FunSuite {
 
-  val source1 =
+  val source1: String =
     """===config===
       |title: aaa
       |value1 : bb bb
@@ -21,7 +21,7 @@ class InlineConfigSuite extends FunSuite {
       |bar
     """.stripMargin
 
-  val source2 =
+  val source2: String =
     """
       |# hoge
       |
@@ -35,14 +35,14 @@ class InlineConfigSuite extends FunSuite {
       |bar
     """.stripMargin
 
-  val exceptStatement = Seq(
+  val exceptStatement: Seq[String] = Seq(
     """title: aaa""",
     """value1 : bb bb""",
     """value2 :123""",
     """  value3:\\ddd//"""
   )
 
-  val exceptConfig = Map(
+  val exceptConfig: Map[String, InlineConfig] = Map(
     "title"  -> InlineConfig("title", "aaa"),
     "value1" -> InlineConfig("value1", "bb bb"),
     "value2" -> InlineConfig("value2", "123"),
@@ -58,6 +58,6 @@ class InlineConfigSuite extends FunSuite {
   }
 
   test("Test InlineConfig.read 01") {
-    assert(InlineConfig.read(source1.split("\n")).get == exceptConfig)
+    assert(InlineConfig.read(source1.split("\n")) == exceptConfig)
   }
 }
