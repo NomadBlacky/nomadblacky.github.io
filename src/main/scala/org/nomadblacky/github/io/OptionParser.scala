@@ -17,8 +17,8 @@ object OptionParser {
 }
 
 case class CommandLineConfig(
-                              destDir: JFile = new JFile("_build"),
-                              indexTemplate: JFile = new JFile("templates/index.md"),
-                              blogsDir: JFile = new JFile("blogs"),
-                              indexFile: JFile = new JFile("index.md")
+  destDir: JFile = new JFile("_build"),
+  indexTemplate: JFile = new JFile("templates/index.md"),
+  blogsDir: JFile = new JFile("blogs"),
+  indexFile: JFile = new JFile("index.md")
 )

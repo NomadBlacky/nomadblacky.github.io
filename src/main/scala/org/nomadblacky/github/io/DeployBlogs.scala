@@ -79,13 +79,4 @@ object DeployBlogs {
     writeIndex(markdowns, config)
   }
 
-  def main(args: Array[String]): Unit = {
-    import OptionParser._
-    parser.parse(args, CommandLineConfig()) match {
-      case Some(config) ⇒
-        run(config)
-      case None ⇒
-        println(usage)
-    }
-  }
 }
