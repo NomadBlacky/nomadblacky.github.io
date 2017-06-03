@@ -9,7 +9,7 @@ import scala.io.Source
 import scala.util.Try
 
 /**
- * Created by blacky on 17/05/10.
+ *  Created by blacky on 17/05/10.
  */
 object DeployBlogs {
 
@@ -20,14 +20,12 @@ object DeployBlogs {
     }
     if (f.isDirectory ^ isDirectory) {
       val msg = if (f.isDirectory) "directory" else "file"
-      throw new IllegalStateException(s"${f.path} is a ${msg}")
+      throw new IllegalStateException(s"${f.path} is a $msg")
     }
     f
   }
 
-  def getUsage(): String = {
-    Source.fromURL(getClass.getResource("usage.txt")).getLines().mkString("\n")
-  }
+  lazy val usage: String = Source.fromURL(getClass.getResource("usage.txt")).getLines().mkString("\n")
 
   def buildBlogListMarkDown(blogs: Seq[File], currentDir: File = File(".")): String = {
     blogs
@@ -37,9 +35,9 @@ object DeployBlogs {
       .mkString("\n")
   }
 
-  def writeIndex(blogs: Seq[File], templateFile: File, indexFile: File = File("index.md")) = {
+  def writeIndex(blogs: Seq[File], config: CommandLineConfig): File = {
     val markdown =
-      templateFile.lines
+      config.indexTemplate.toScala.lines
         .map { s ⇒
           if (s.matches("""^::articles::$"""))
             buildBlogListMarkDown(blogs)
@@ -47,25 +45,25 @@ object DeployBlogs {
             s
         }
 
-    indexFile
+    config.indexFile.toScala
       .createIfNotExists()
       .clear()
       .append(markdown.mkString("\n"))
   }
 
-  def convertMarkdownToHtml(baseDir: File, destDir: File): List[File] = {
-    val markdowns = baseDir
+  def convertMarkdownToHtml(config: CommandLineConfig): List[File] = {
+    val markdowns = config.blogsDir.toScala
       .listRecursively
       .filter(!_.isDirectory)
-      .filter(f ⇒ f.extension.map(_ == ".md").getOrElse(false))
+      .filter(f ⇒ f.extension.contains(".md"))
 
     val pegdown = new PegDownProcessor()
 
     val pairs = markdowns
-      .map(f ⇒ (f, destDir / (f.nameWithoutExtension + ".html")))
+      .map(f ⇒ (f, config.destDir.toScala / (f.nameWithoutExtension + ".html")))
       .toList
 
-    destDir.createIfNotExists(true, true)
+    config.destDir.toScala.createIfNotExists(asDirectory = true, createParents = true)
     pairs.foreach {
       case (from, to) ⇒
         to.createIfNotExists()
@@ -76,17 +74,18 @@ object DeployBlogs {
     pairs.map(_._2)
   }
 
-  def run(args: Array[String]): Unit = {
-    val templateFile = getFile(args(0), false).get
-    val blogsDir = getFile(args(1), true).get
-    val destDir = getFile(args(2), false).getOrElse(File("_build"))
-
-    val markdowns = convertMarkdownToHtml(blogsDir, destDir)
-    writeIndex(markdowns, templateFile)
+  def run(config: CommandLineConfig): Unit = {
+    val markdowns = convertMarkdownToHtml(config)
+    writeIndex(markdowns, config)
   }
 
   def main(args: Array[String]): Unit = {
-    if (args.size == 0) println(getUsage())
-    else run(args)
+    import OptionParser._
+    parser.parse(args, CommandLineConfig()) match {
+      case Some(config) ⇒
+        run(config)
+      case None ⇒
+        println(usage)
+    }
   }
 }
