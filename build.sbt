@@ -59,7 +59,7 @@ scalacOptions ++= Seq(
   "-Ywarn-dead-code",
   "-Xfuture")
 
-initialCommands := "import org.nomadblacky.github.io._"
+//initialCommands := "import org.nomadblacky.github.io._"
 
 SbtScalariform.scalariformSettings
 

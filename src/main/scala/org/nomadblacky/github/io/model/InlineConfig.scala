@@ -21,7 +21,7 @@ object InlineConfig {
     if (invalids.nonEmpty && throwIfInvalid) {
       throw new IllegalStateException(invalids.mkString("\n"))
     }
-    configs.filter(_.isRight).map(_.right.get).map(cf => (cf.key, cf)).toMap
+    configs.filter(_.isRight).map(_.right.get).map(cf ⇒ (cf.key, cf)).toMap
   }
 
   def getConfig(line: String): Either[String, InlineConfig] = keyValueRegex
