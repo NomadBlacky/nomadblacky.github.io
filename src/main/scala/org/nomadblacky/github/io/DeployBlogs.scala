@@ -14,14 +14,14 @@ object DeployBlogs {
 
   def buildBlogListMarkDown(blogs: Seq[File], currentDir: File = File(".")): String = blogs
     .filter(!_.isDirectory)
-    .map { f ⇒ (f, f.lines.take(1).map(_.replaceAll("""^#+\s+""", ""))) }
-    .map { case (f, tr) ⇒ s"+ [${f.name} ${tr.mkString}](${currentDir.relativize(f).toString})" }
+    .map { f => (f, f.lines.take(1).map(_.replaceAll("""^#+\s+""", ""))) }
+    .map { case (f, tr) => s"+ [${f.name} ${tr.mkString}](${currentDir.relativize(f).toString})" }
     .mkString("\n")
 
   def writeIndex(blogs: Seq[File], config: CommandLineConfig): File = {
     val markdown =
       config.indexTemplate.toScala.lines
-        .map { s ⇒
+        .map { s =>
           if (s.matches("""^::articles::$"""))
             buildBlogListMarkDown(blogs)
           else
@@ -41,12 +41,12 @@ object DeployBlogs {
       .map(Blog.read(_))
 
     val pairs = blogs
-      .map(b ⇒ (b, config.destDir.toScala / (b.name + ".html")))
+      .map(b => (b, config.destDir.toScala / (b.name + ".html")))
       .toList
 
     config.destDir.toScala.createIfNotExists(asDirectory = true, createParents = true)
     pairs.foreach {
-      case (blog, dest) ⇒
+      case (blog, dest) =>
         dest.createIfNotExists()
           .clear()
           .write(blog.convertedText)

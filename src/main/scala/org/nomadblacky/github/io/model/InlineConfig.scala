@@ -21,12 +21,12 @@ object InlineConfig {
     if (invalids.nonEmpty && throwIfInvalid) {
       throw new IllegalStateException(invalids.mkString("\n"))
     }
-    configs.filter(_.isRight).map(_.right.get).map(cf ⇒ (cf.key, cf)).toMap
+    configs.filter(_.isRight).map(_.right.get).map(cf => (cf.key, cf)).toMap
   }
 
   def getConfig(line: String): Either[String, InlineConfig] = keyValueRegex
     .findFirstMatchIn(line)
-    .map(m ⇒ InlineConfig(m.group("key"), m.group("value")))
+    .map(m => InlineConfig(m.group("key"), m.group("value")))
     .toRight(s"Invalid input $line")
 
   def getStatement(lines: Seq[String]): Seq[String] = lines

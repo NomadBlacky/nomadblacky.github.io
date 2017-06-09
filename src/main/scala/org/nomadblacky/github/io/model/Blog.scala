@@ -37,8 +37,8 @@ object Unknown extends FileType {
 
 object FileType {
   def get(extension: String): FileType = extension match {
-    case ".md"   ⇒ Markdown
-    case ".html" ⇒ Html
-    case _       ⇒ Unknown
+    case ".md"   => Markdown
+    case ".html" => Html
+    case _       => Unknown
   }
 }

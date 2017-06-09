@@ -11,9 +11,9 @@ object Main {
   def main(args: Array[String]): Unit = {
     import OptionParser._
     parser.parse(args, CommandLineConfig()) match {
-      case Some(config) ⇒
+      case Some(config) =>
         DeployBlogs.run(config)
-      case None ⇒
+      case None =>
         println(usage)
     }
   }
