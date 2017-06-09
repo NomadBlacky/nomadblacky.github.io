@@ -31,8 +31,8 @@ object InlineConfig {
 
   def getStatement(lines: Seq[String]): Seq[String] = lines
     .dropWhile(!_.matches("""^===config===$"""))
+    .drop(1)
     .takeWhile(!_.matches("""^===end\s+config===$"""))
-    .tail
 }
 
 trait Reader[A] {
