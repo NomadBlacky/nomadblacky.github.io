@@ -2,22 +2,22 @@ package org.nomadblacky.github.io
 
 import java.io.File
 
-import org.scalatest.{FunSuite, Matchers}
+import org.scalatest.{ FunSuite, Matchers }
 
 /**
-  * Created by blacky on 17/06/02.
-  */
+ * Created by blacky on 17/06/02.
+ */
 class OptionParserSuite extends FunSuite with Matchers {
   import OptionParser._
 
   test("Default values") {
     parser.parse(Seq.empty, CommandLineConfig()) match {
-      case Some(c) =>
+      case Some(c) ⇒
         c.destDir shouldBe new File("_build")
         c.indexTemplate shouldBe new File("templates/index.md")
         c.blogsDir shouldBe new File("blogs")
         c.indexFile shouldBe new File("index.md")
-      case None =>
+      case None ⇒
         fail()
     }
   }
@@ -25,9 +25,9 @@ class OptionParserSuite extends FunSuite with Matchers {
   test("--dest-dir option") {
     val options = Seq("--dest-dir", "dest")
     parser.parse(options, CommandLineConfig()) match {
-      case Some(c) =>
+      case Some(c) ⇒
         c.destDir shouldBe new File("dest")
-      case None =>
+      case None ⇒
         fail()
     }
   }
@@ -35,9 +35,9 @@ class OptionParserSuite extends FunSuite with Matchers {
   test("--index-template option") {
     val options = Seq("--index-template", "template/hoge/template.html")
     parser.parse(options, CommandLineConfig()) match {
-      case Some(c) =>
+      case Some(c) ⇒
         c.indexTemplate shouldBe new File("template/hoge/template.html")
-      case None =>
+      case None ⇒
         fail()
     }
   }
@@ -45,9 +45,9 @@ class OptionParserSuite extends FunSuite with Matchers {
   test("--blogs-dir option") {
     val options = Seq("--blogs-dir", "blogshoge")
     parser.parse(options, CommandLineConfig()) match {
-      case Some(c) =>
+      case Some(c) ⇒
         c.blogsDir shouldBe new File("blogshoge")
-      case None =>
+      case None ⇒
         fail()
     }
   }
