@@ -9,12 +9,12 @@ import org.scalatest.FunSuite
 class InlineConfigSuite extends FunSuite {
 
   val source1: String =
-    """===config===
+    """$=====
       |title: aaa
       |value1 : bb bb
       |value2 :123
       |  value3:\\ddd//
-      |===end config===
+      |$=====
       |# hoge
       |
       |foo
@@ -25,12 +25,12 @@ class InlineConfigSuite extends FunSuite {
     """
       |# hoge
       |
-      |===config===
+      |$==========
       |title: aaa
       |value1 : bb bb
       |value2 :123
       |  value3:\\ddd//
-      |===end config===
+      |$==========
       |foo
       |bar
     """.stripMargin

@@ -13,6 +13,9 @@ object InlineConfig {
 
   lazy val keyValueRegex: Regex = new Regex("""^\s*(\w+)\s*:\s*(.+)\s*$""", "key", "value")
 
+  val configStartRegexp: String = """^\$={5,}$"""
+  val configEndRegexp: String = """^\$={5,}$"""
+
   lazy val logger: Logger = Logger.getLogger(getClass.getName)
 
   def read(sourceLines: Seq[String], throwIfInvalid: Boolean = true): Map[String, InlineConfig] = {
@@ -30,9 +33,9 @@ object InlineConfig {
     .toRight(s"Invalid input $line")
 
   def getStatement(lines: Seq[String]): Seq[String] = lines
-    .dropWhile(!_.matches("""^===config===$"""))
+    .dropWhile(!_.matches(configStartRegexp))
     .drop(1)
-    .takeWhile(!_.matches("""^===end\s+config===$"""))
+    .takeWhile(!_.matches(configEndRegexp))
 }
 
 trait Reader[A] {
