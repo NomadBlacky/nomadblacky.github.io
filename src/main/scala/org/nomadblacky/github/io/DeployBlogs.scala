@@ -12,18 +12,18 @@ object DeployBlogs {
 
   lazy val usage: String = Source.fromURL(getClass.getResource("usage.txt")).getLines().mkString("\n")
 
-  def buildBlogListMarkDown(blogs: Seq[File], currentDir: File = File(".")): String = blogs
-    .filter(!_.isDirectory)
-    .map { f => (f, f.lines.take(1).map(_.replaceAll("""^#+\s+""", ""))) }
-    .map { case (f, tr) => s"+ [${f.name} ${tr.mkString}](${currentDir.relativize(f).toString})" }
-    .mkString("\n")
+  def buildBlogListMarkDown(blogsAndDestFiles: Seq[(Blog, File)], currentDir: File = File(".")): String =
+    blogsAndDestFiles
+      .filter(!_._2.isDirectory)
+      .map { case (blog, dest) => s"+ [${blog.title}](${currentDir.relativize(dest).toString})" }
+      .mkString("\n")
 
-  def writeIndex(blogs: Seq[File], config: CommandLineConfig): File = {
+  def writeIndex(blogsAndDestFiles: Seq[(Blog, File)], config: CommandLineConfig): File = {
     val markdown =
       config.indexTemplate.toScala.lines
         .map { s =>
           if (s.matches("""^::articles::$"""))
-            buildBlogListMarkDown(blogs)
+            buildBlogListMarkDown(blogsAndDestFiles)
           else
             s
         }
@@ -34,14 +34,14 @@ object DeployBlogs {
       .append(markdown.mkString("\n"))
   }
 
-  def convertMarkdownToHtml(config: CommandLineConfig): List[File] = {
+  def convertMarkdownToHtml(config: CommandLineConfig): List[(Blog, File)] = {
     val blogs = config.blogsDir.toScala
       .listRecursively
       .filter(!_.isDirectory)
-      .map(Blog.read(_))
+      .map(Blog.read)
 
     val pairs = blogs
-      .map(b => (b, config.destDir.toScala / (b.name + ".html")))
+      .map(b => (b, config.destDir.toScala / (b.fileName + ".html")))
       .toList
 
     config.destDir.toScala.createIfNotExists(asDirectory = true, createParents = true)
@@ -52,12 +52,12 @@ object DeployBlogs {
           .write(blog.convertedText)
     }
 
-    pairs.map(_._2)
+    pairs
   }
 
   def run(config: CommandLineConfig): Unit = {
-    val markdowns = convertMarkdownToHtml(config)
-    writeIndex(markdowns, config)
+    val blogAndDestFile = convertMarkdownToHtml(config)
+    writeIndex(blogAndDestFile, config)
   }
 
 }
