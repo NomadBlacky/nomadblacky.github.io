@@ -1,0 +1,153 @@
+<p>$===== title:【勉強会】第10回 Jenkins勉強会 $=====</p>
+<h1>第10回 Jenkins勉強会</h1>
+<p>https://www.meetup.com/ja-JP/Tokyo-Jenkins-Area-Meetup/events/240833004/</p>
+<h2>改訂第3版Jenkins実践入門</h2>
+<ul>
+  <li>Pipeline as Code</li>
+  <li>ビルドをDSLで記述</li>
+  <li>Jenkinsfileという名前でバージョン管理できる</li>
+  <li>ScriptedPipeline</li>
+  <li>GroovyDSL</li>
+  <li>やや上級者向け</li>
+  <li>DeclarativePipeline</li>
+  <li>宣言的に、かつブロックベースでPipelineが記述できる</li>
+  <li>初心者向け</li>
+  <li>"第十章Pipelineの設定"</li>
+  <li>BluOcean</li>
+  <li>UIの改善  *　GUI Pipeline Editor
+</li>
+  <li>Pipeline Visualization</li>
+  <li>Git/Github Integration</li>
+  <li>Personalization</li>
+  <li>ロードマップ</li>
+  <li>JenkinsfileとBlueOceanのどっちがいい?</li>
+  <li>Jenkinsのいいところはプラグインアーキテクチャ</li>
+  <li>チームのスタイルに合わせる</li>
+  <li>Java関連ツールのバージョンアップ</li>
+  <li>Python,Ruby</li>
+  <li>Docker</li>
+  <li>Dockerにinstall</li>
+  <li>Dockerをビルドエージェントにする</li>
+  <li>ChatOps</li>
+  <li>Backlog/TFS</li>
+  <li>Rebuildfm #161</li>
+</ul>
+<h2>Multibranch Pipeline with Docker 入門編</h2>
+<ul>
+  <li>SVN→Git</li>
+  <li>GUI→</li>
+  <li>Parametarized→</li>
+  <li>GUIは変更履歴が追いづらい</li>
+  <li>→PipelinePlugin</li>
+  <li>Pipelineプロジェクト</li>
+  <li>PluginがPipelineに対応している必要がある</li>
+  <li>→メジャーどころはだいたい対応済み</li>
+  <li>PypelineSyntax</li>
+  <li>GUIからStepを自動生成</li>
+  <li>特定ノードでしか動かない部分を作らない</li>
+  <li>GUIだと変更が即反映されるので動作確認しずらい</li>
+  <li>日々増えるブランチをどう管理すればいいのか?</li>
+  <li>→ Multibranch Pipeline</li>
+  <li>Gitのブランチごとにジョブを作成してくれる</li>
+  <li>ブランチごとにJenkinsfileを持てるので、Pluginを試せる</li>
+  <li>デフォルトはビルド履歴はすべて保存される!
+    <ul>
+      <li>不要なブランチはこまめに消そう</li>
+      <li>→DiskUsagePlugin</li>
+    </ul>
+  </li>
+  <li>PRを扱うには
+    <ul>
+      <li>GithubBranchSourcePlugin</li>
+    </ul>
+  </li>
+  <li>ビルドはクリーンなコンテナで行いたい</li>
+  <li>slave毎に乖離ができる…</li>
+  <li>→Docker</li>
+  <li>DockerPlugin</li>
+  <li>DockerPipelinePlugin</li>
+  <li>シェルでDockerを動かす
+    <ul>
+      <li>開発者のローカル環境で動かせるように</li>
+    </ul>
+  </li>
+  <li>Dockerfile</li>
+  <li>各種ライブラリをインストールしたイメージを作成する</li>
+  <li>DockerコマンドをMakefileにまとめるとJenkinsfileの見通しが良くなる</li>
+  <li>まとめ</li>
+  <li>Pipelineでジョブをコードとして構成管理できる</li>
+  <li>Multibranch</li>
+  <li>Docker</li>
+</ul>
+<h2>巨大不明ビルド</h2>
+<ul>
+  <li>巨大不明ビルドと戦う</li>
+  <li>通知周りをどうする?</li>
+  <li>APIを叩く</li>
+  <li>ポーリングしないといけない</li>
+  <li>ジョブごとに設定がいる</li>
+  <li>Websoketplugin</li>
+  <li>pushしてもらう</li>
+  <li>Slack</li>
+  <li>ジョブごとに設定がいる</li>
+  <li>ServerSentEvents GateWay Plugin</li>
+  <li>ステージごとに通知できる</li>
+  <li>Jenkins側での設定は不要</li>
+</ul>
+<h2>Multibranch Pipelineでいろいろ学んだこと</h2>
+<ul>
+  <li>変更があったブランチやPRをビルド</li>
+  <li>Webhook設定を忘れがち</li>
+  <li>Multibranchでも手動</li>
+  <li>Githubの設定に注意</li>
+  <li>ブランチの設定箇所</li>
+  <li>→条件によって使い分ける</li>
+</ul>
+<h2>JenkinsとLint</h2>
+<ul>
+  <li>Jenkinsファイル</li>
+  <li>たまにしか書かないから構文を間違える…</li>
+  <li>→公式Linterがある</li>
+  <li>実行方法</li>
+  <li>SSH</li>
+  <li>curl</li>
+  <li>使いにくいからnpmiパッケージ作った!
+    <ul>
+      <li>jflint</li>
+    </ul>
+  </li>
+  <li>無用な死を避ける!</li>
+</ul>
+<h2>本番環境のリリースを自動化した話</h2>
+<ul>
+  <li>まだWinSCPで消耗しているの?(言ってみたかった)</li>
+  <li>サービスを早く改善→リリースを自動化→ビジネス価値</li>
+  <li>固い組織で</li>
+  <li>検証環境で実績作り</li>
+  <li>同じ手順で本番へ</li>
+  <li>ビルド職人にお金を!</li>
+</ul>
+<h2>プルリクエストCI時のTIPSとJenkinsおじさん</h2>
+<ul>
+  <li>プルリクエストCI?</li>
+  <li>メインブランチにマージする前に、PRのブランチでテスト</li>
+  <li>TIPS</li>
+  <li>自動PRジョブ作成</li>
+  <li>backlog-multibranch-plugin
+    <ul>
+      <li>backlogと連携できる</li>
+    </ul>
+  </li>
+  <li>複数リポジトリにまたがったPR</li>
+  <li>Jenkinsfile職人</li>
+  <li>画面ぽちぽち系がへった</li>
+  <li>こったことをしようとするとJenkinsや周辺知識がそれなりに必要
+    <ul>
+      <li>インフラ、ビルドツール</li>
+    </ul>
+  </li>
+  <li>コード化によって以前より抽象度が高い・高度なものが実現しやすくなっている。</li>
+  <li>Jenkinsおじさんがこの先生き残るには</li>
+  <li>Jenkins+αで攻める</li>
+  <li>Jenkins職人芸を磨いていく</li>
+</ul>
