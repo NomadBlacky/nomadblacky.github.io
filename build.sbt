@@ -1,6 +1,6 @@
-import scalariform.formatter.preferences._
-import com.typesafe.sbt.SbtScalariform
 import com.typesafe.sbt.SbtScalariform.ScalariformKeys
+
+import scalariform.formatter.preferences._
 
 name := "nomadblacky.github.io"
 
@@ -9,8 +9,6 @@ organization := "org.nomadblacky"
 version := "0.1.0"
 
 scalaVersion := "2.12.2"
-
-crossScalaVersions := Seq("2.11.8", "2.12.2")
 
 resolvers ++= Seq(
   "Sonatype OSS Snapshots" at "http://oss.sonatype.org/content/repositories/snapshots/"
@@ -61,9 +59,7 @@ scalacOptions ++= Seq(
 
 //initialCommands := "import org.nomadblacky.github.io._"
 
-SbtScalariform.scalariformSettings
-
 ScalariformKeys.preferences := ScalariformKeys.preferences.value
   .setPreference(AlignSingleLineCaseStatements, true)
-  .setPreference(DoubleIndentClassDeclaration, true)
+  .setPreference(DoubleIndentConstructorArguments, true)
   .setPreference(RewriteArrowSymbols, false)
