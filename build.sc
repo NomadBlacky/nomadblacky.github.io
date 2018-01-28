@@ -2,7 +2,7 @@
 import $ivy.`org.pegdown:pegdown:1.6.0`
 import $ivy.`com.lihaoyi::scalatags:0.6.7`
 
-import $file.src.pages
+import $file.src.pages, pages._
 
 import ammonite.ops._
 import org.pegdown.PegDownProcessor
@@ -26,23 +26,12 @@ def main() = {
         ),
         body(
           raw(h)
-        )
+        )/
       )
       write.over(pagesDir/(m.last + ".html"), page.toString)
     }
 
-  write.over(pwd/"index.html", buildIndexPage(pwd/"index.md"))
+  write.over(pwd/"index.html", indexPageBuilder(pwd/"index.md").build.toString)
 
   println("Complete!")
-}
-
-def buildIndexPage(markdown: Path): String = {
-  html(
-    head(
-      tags2.title("nomadblacky.github.io")
-    ),
-    body(
-      raw(pegdown.markdownToHtml(read! markdown))
-    )
-  ).toString
 }
