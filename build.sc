@@ -26,7 +26,7 @@ def main() = {
         ),
         body(
           raw(h)
-        )/
+        )
       )
       write.over(pagesDir/(m.last + ".html"), page.toString)
     }
