@@ -15,7 +15,8 @@ trait PageResource extends ConcreteHtmlTag[String]
 type PageContent = ConcreteHtmlTag[String]
 
 trait Page {
-  def build(): ConcreteHtmlTag[String]
+  def scalatags(): ConcreteHtmlTag[String]
+  def rawString(): String = scalatags.toString
 }
 
 trait BasicPage extends Page {
@@ -23,7 +24,7 @@ trait BasicPage extends Page {
   def resources(): Seq[PageResource]
   def content(): Seq[PageContent]
 
-  override def build(): ConcreteHtmlTag[String] =
+  override def scalatags(): ConcreteHtmlTag[String] =
     html(
       head(
         (tags2.title(title) +: resources): _*
@@ -60,20 +61,38 @@ val globalFooter = footer(
 
 
 // Page builder
-trait PageBuilder extends (Path => Page)
+trait PageBuilder[T] extends (T => Page)
 
 trait PegDown {
   val pegdownOptions: Int = 0
   val pegdown: PegDownProcessor = new PegDownProcessor(pegdownOptions)
 }
 
-val indexPageBuilder = new PageBuilder with PegDown {
+val indexPageBuilder = new PageBuilder[Path] with PegDown {
   def apply(path: Path): Page = BasicPageImpl(
     "nomadblacky.github.io",
     Seq(),
     Seq(
       globalHeader,
       div(raw(pegdown.markdownToHtml(read! path))),
+      globalFooter
+    )
+  )
+}
+
+val blogsPageBuilder = new PageBuilder[Seq[Path]] {
+  def apply(blogs: Seq[Path]): Page = BasicPageImpl(
+    "blogs",
+    Seq(),
+    Seq(
+      globalHeader,
+      div(
+        ul(
+          li("a"),
+          li("b"),
+          li("c")
+        )
+      ),
       globalFooter
     )
   )

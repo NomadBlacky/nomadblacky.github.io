@@ -17,7 +17,7 @@ val pegdown = new PegDownProcessor()
 @main
 def main() = {
   val (markdowns, otherFiles) = ls! postsDir partition (_.ext == "md")
-  markdowns
+  val dests = markdowns
     .map(m => (m, pegdown.markdownToHtml(read! m)))
     .map { case (m, h) =>
       val page = html(
@@ -31,7 +31,9 @@ def main() = {
       write.over(pagesDir/(m.last + ".html"), page.toString)
     }
 
-  write.over(pwd/"index.html", indexPageBuilder(pwd/"index.md").build.toString)
+  write.over(pwd/"index.html", indexPageBuilder(pwd/"index.md").rawString)
+
+  write.over(pwd/'pages/"blogs.html", blogsPageBuilder(markdowns).rawString)
 
   println("Complete!")
 }
