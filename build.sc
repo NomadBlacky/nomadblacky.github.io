@@ -17,18 +17,11 @@ val pegdown = new PegDownProcessor()
 @main
 def main() = {
   val (markdowns, otherFiles) = ls! postsDir partition (_.ext == "md")
-  val dests = markdowns
-    .map(m => (m, pegdown.markdownToHtml(read! m)))
-    .map { case (m, h) =>
-      val page = html(
-        head(
-          tags2.title(m.last)
-        ),
-        body(
-          raw(h)
-        )
-      )
-      write.over(pagesDir/(m.last + ".html"), page.toString)
+  markdowns
+    // TODO: Get a title of a blog post.
+    .map(m => (m, PostInfo("title", pegdown.markdownToHtml(read! m))))
+    .foreach { case (m, p) =>
+      write.over(pagesDir/(m.last + ".html"), postViewPageBuilder(p).rawString)
     }
 
   write.over(pwd/"index.html", indexPageBuilder(pwd/"index.md").rawString)

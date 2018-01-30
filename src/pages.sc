@@ -97,3 +97,18 @@ val postsListPageBuilder = new PageBuilder[Seq[Path]] {
     )
   )
 }
+
+case class PostInfo(
+  title: String,
+  rawHtml: String
+)
+
+val postViewPageBuilder = new PageBuilder[PostInfo] {
+  def apply(post: PostInfo): Page = BasicPageImpl(
+    post.title,
+    Seq(),
+    Seq(
+      div(raw(post.rawHtml))
+    )
+  )
+}
