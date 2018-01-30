@@ -80,7 +80,7 @@ val indexPageBuilder = new PageBuilder[Path] with PegDown {
   )
 }
 
-val blogsPageBuilder = new PageBuilder[Seq[Path]] {
+val postsListPageBuilder = new PageBuilder[Seq[Path]] {
   def apply(blogs: Seq[Path]): Page = BasicPageImpl(
     "blogs",
     Seq(),

@@ -33,7 +33,7 @@ def main() = {
 
   write.over(pwd/"index.html", indexPageBuilder(pwd/"index.md").rawString)
 
-  write.over(pwd/'pages/"blogs.html", blogsPageBuilder(markdowns).rawString)
+  write.over(pwd/'pages/"blogs.html", postsListPageBuilder(markdowns).rawString)
 
   println("Complete!")
 }
