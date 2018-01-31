@@ -45,8 +45,17 @@ case class BasicPageImpl(
 // Page contents
 val globalHeader = header(
   div(
-    a(href:="/")(
-      p("nomadblacky.github.io")
+    ul(
+      li(
+        a(href:="/")(
+          p("nomadblacky.github.io")
+        )
+      ),
+      li(
+        a(href:="pages/blogs.html")(
+          p("Blogs")
+        )
+      )
     )
   )
 )
