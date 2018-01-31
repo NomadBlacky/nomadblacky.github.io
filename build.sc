@@ -17,16 +17,32 @@ val pegdown = new PegDownProcessor()
 @main
 def main() = {
   val (markdowns, otherFiles) = ls! postsDir partition (_.ext == "md")
-  markdowns
-    // TODO: Get a title of a blog post.
-    .map(m => (m, PostInfo("title", pegdown.markdownToHtml(read! m))))
-    .foreach { case (m, p) =>
-      write.over(pagesDir/(m.last + ".html"), postViewPageBuilder(p).rawString)
-    }
 
+  val posts = markdowns
+    .map(m => {
+      val rawMarkdown = read! m
+      PostInfo(
+        title   = extractTitle(rawMarkdown).getOrElse("Untitled"),
+        rawHtml = pegdown.markdownToHtml(rawMarkdown),
+        dest    = pagesDir/(m.last + ".html")
+      )
+    })
+
+  // Write index page.
   write.over(pwd/"index.html", indexPageBuilder(pwd/"index.md").rawString)
 
-  write.over(pwd/'pages/"blogs.html", postsListPageBuilder(markdowns).rawString)
+  // Write blogs list page.
+  write.over(pwd/'pages/"blogs.html", postsListPageBuilder(posts, pagesDir).rawString)
+
+  // Write blog view page.
+  posts.foreach(p => write.over(p.dest, postViewPageBuilder(p).rawString))
 
   println("Complete!")
 }
+
+val titleRegex = """^#\s+(.+)$""".r
+
+def extractTitle(rawMarkdown: String): Option[String] =
+  rawMarkdown.lines.collectFirst {
+    case titleRegex(title) => title
+  }

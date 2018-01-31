@@ -80,28 +80,36 @@ val indexPageBuilder = new PageBuilder[Path] with PegDown {
   )
 }
 
-val postsListPageBuilder = new PageBuilder[Seq[Path]] {
-  def apply(blogs: Seq[Path]): Page = BasicPageImpl(
-    "blogs",
-    Seq(),
-    Seq(
-      globalHeader,
-      div(
-        ul(
-          li("a"),
-          li("b"),
-          li("c")
-        )
-      ),
-      globalFooter
+val postsListPageBuilder = new PageBuilder[(Seq[PostInfo], Path)] {
+  def apply(t2: (Seq[PostInfo], Path)): Page = {
+    val posts = t2._1
+    val baseDir = t2._2
+    BasicPageImpl(
+      "blogs",
+      Seq(),
+      Seq(
+        globalHeader,
+        div(
+          ul(
+            for(p <- posts)
+            yield a(href:=p.destRelativeTo(baseDir).toString)(
+              li(p.title)
+            )
+          )
+        ),
+        globalFooter
+      )
     )
-  )
+  }
 }
 
 case class PostInfo(
   title: String,
-  rawHtml: String
-)
+  rawHtml: String,
+  dest: Path
+) {
+  def destRelativeTo(p: Path): RelPath = dest.relativeTo(p)
+}
 
 val postViewPageBuilder = new PageBuilder[PostInfo] {
   def apply(post: PostInfo): Page = BasicPageImpl(
