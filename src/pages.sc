@@ -65,6 +65,20 @@ val globalHeader = header(
   )
 )
 
+val bootstrapHeader = tags2.nav(
+  cls := "navbar navbar-default navbar-fixed-top",
+  a(cls := "navbar-brand", href := "/") (
+    "nomadblacky.github.io"
+  ),
+  div(cls := "navbar-collapse") (
+    div(cls := "navbar-nav") (
+      a(cls := "nav-item nav-link", href := "/pages/blogs.html") (
+        "Blogs"
+      )
+    )
+  )
+)
+
 val globalFooter = footer(
   div(
     a(href:="https://github.com/NomadBlacky/nomadblacky.github.io")(
@@ -86,7 +100,7 @@ val indexPageBuilder = new PageBuilder[Path] with PegDown {
   def apply(path: Path): Page = BasicPageImpl(
     "nomadblacky.github.io",
     Seq(
-      globalHeader,
+      bootstrapHeader,
       div(raw(pegdown.markdownToHtml(read! path))),
       globalFooter
     )
