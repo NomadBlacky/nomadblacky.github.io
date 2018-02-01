@@ -10,6 +10,11 @@ import scalatags.Text.all._
 import scalatags.Text.tags2
 
 
+// Styles
+val styleSheets = Seq(
+  "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+)
+
 // Pages
 trait PageResource extends ConcreteHtmlTag[String]
 type PageContent = ConcreteHtmlTag[String]
@@ -26,7 +31,9 @@ trait BasicPage extends Page {
   override def scalatags(): ConcreteHtmlTag[String] =
     html(
       head(
-        tags2.title(title)
+        tags2.title(title),
+        for(s <- styleSheets)
+        yield link(href := s, rel := "stylesheet", `type` := "text/css")
       ),
       body(
         content
