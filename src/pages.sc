@@ -21,13 +21,12 @@ trait Page {
 
 trait BasicPage extends Page {
   def title(): String
-  def resources(): Seq[PageResource]
   def content(): Seq[PageContent]
 
   override def scalatags(): ConcreteHtmlTag[String] =
     html(
       head(
-        (tags2.title(title) +: resources): _*
+        tags2.title(title)
       ),
       body(
         content
@@ -37,7 +36,6 @@ trait BasicPage extends Page {
 
 case class BasicPageImpl(
   title: String,
-  resources: Seq[PageResource],
   content: Seq[PageContent]
 ) extends BasicPage
 
@@ -80,7 +78,6 @@ trait PegDown {
 val indexPageBuilder = new PageBuilder[Path] with PegDown {
   def apply(path: Path): Page = BasicPageImpl(
     "nomadblacky.github.io",
-    Seq(),
     Seq(
       globalHeader,
       div(raw(pegdown.markdownToHtml(read! path))),
@@ -95,7 +92,6 @@ val postsListPageBuilder = new PageBuilder[(Seq[PostInfo], Path)] {
     val baseDir = t2._2
     BasicPageImpl(
       "blogs",
-      Seq(),
       Seq(
         globalHeader,
         div(
@@ -123,7 +119,6 @@ case class PostInfo(
 val postViewPageBuilder = new PageBuilder[PostInfo] {
   def apply(post: PostInfo): Page = BasicPageImpl(
     post.title,
-    Seq(),
     Seq(
       div(raw(post.rawHtml))
     )
