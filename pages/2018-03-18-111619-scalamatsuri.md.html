@@ -1,0 +1,135 @@
+<html><head><title>[ScalaMatsuri2018]AmmoniteによるScalaScript入門&lt;a id=&quot;sec-1&quot; name=&quot;sec-1&quot;&gt;&lt;/a&gt;</title><link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" type="text/css" /></head><body><div><h1>[ScalaMatsuri2018]AmmoniteによるScalaScript入門<a id="sec-1" name="sec-1"></a></h1>
+<h2>だれ?<a id="sec-1-1" name="sec-1-1"></a></h2>
+<ul>
+  <li>門脇 拓巳 (Takumi Kadowaki)</li>
+  <li>株式会社セプテーニ・オリジナル
+    <ul>
+      <li>3月入社</li>
+    </ul>
+  </li>
+  <li>Scala歴1年半</li>
+  <li>ScalaMatsuri初参加・スタッフ</li>
+  <li>Twitter
+    <ul>
+      <li>@blac_k_ey</li>
+    </ul>
+  </li>
+  <li>Github
+    <ul>
+      <li>NomadBlacky</li>
+    </ul>
+  </li>
+</ul>
+<h2>Scala、どうやって書いてる？<a id="sec-1-2" name="sec-1-2"></a></h2>
+<ul>
+  <li>sbtなどのビルドツール
+    <ul>
+      <li>pluginなど、大きなプロジェクトには便利</li>
+      <li>書捨てのような小さなプロジェクトにはオーバー</li>
+    </ul>
+  </li>
+  <li>ScalaビルトインのScalaScript
+    <ul>
+      <li>標準ライブラリのみ使うならいいが…</li>
+      <li>3rdPartyのライブラリを使う場合
+        <ul>
+          <li>手でjarをダウンロードして</li>
+          <li>手でクラスパスにjarを含める必要がある…</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+<h3>コード量<a id="sec-1-2-1" name="sec-1-2-1"></a></h3>
+<p><code>
+少 標準のScalaREPL
+|  標準のScalaScript
+|
+|
+|  (ここを埋めるものがない!!!)
+|
+|
+多 sbtなどのビルドツール
+</code></p>
+<p>そこで→→→ Ammonite REPL/Script</p>
+<h2>Ammonite-REPL<a id="sec-1-3" name="sec-1-3"></a></h2>
+<ul>
+  <li>高機能なScalaのREPL
+    <ul>
+      <li>シンタックスハイライト</li>
+      <li>複数行編集</li>
+      <li>履歴検索</li>
+      <li>ブロック入力</li>
+      <li>Undo/Redo</li>
+    </ul>
+  </li>
+</ul>
+<h2>MagicImport<a id="sec-1-4" name="sec-1-4"></a></h2>
+<ul>
+  <li>import $ivy
+    <ul>
+      <li>MavenCentralからライブラリを取得、その場で使う事ができる!</li>
+    </ul>
+  </li>
+</ul>
+<h2>Ammonite-Script<a id="sec-1-5" name="sec-1-5"></a></h2>
+<ul>
+  <li>Hello Ammonite!</li>
+  <li>main アノテーションで引数を受け取る</li>
+  <li>import $file で他のスクリプトファイルをimportする</li>
+  <li>amm -w オプション</li>
+</ul>
+<h2>Ammonite-Ops<a id="sec-1-6" name="sec-1-6"></a></h2>
+<ul>
+  <li>ファイル操作に長けたライブラリ
+    <ul>
+      <li>pwd</li>
+      <li>ls</li>
+      <li>read</li>
+      <li>write</li>
+    </ul>
+  </li>
+  <li>BashのようなDSL
+    <ul>
+      <li>| … map</li>
+      <li>|| … flatMap</li>
+      <li>|? … filter</li>
+      <li>|! … foreach</li>
+      <li>|&gt; … Pipe</li>
+    </ul>
+  </li>
+  <li>外部プロセスの実行
+    <ul>
+      <li>%[コマンド名]</li>
+      <li>%%[コマンド名]</li>
+    </ul>
+  </li>
+</ul>
+<h2>Ammoniteの活用例<a id="sec-1-7" name="sec-1-7"></a></h2>
+<ul>
+  <li>静的ブログエンジン</li>
+  <li>GUIアプリケーション</li>
+  <li>ひとつのファイルでPlayFramework</li>
+</ul>
+<h2>参考文献<a id="sec-1-8" name="sec-1-8"></a></h2>
+<ul>
+  <li>Github</li>
+  <li>Document</li>
+  <li>Video</li>
+</ul>
+<h2>まとめ<a id="sec-1-9" name="sec-1-9"></a></h2>
+<p>便利なREPLとしてのAmmonite</p>
+<ul>
+  <li>サードパーティのライブラリをちょっと試したい時にMagicImportが便利</li>
+</ul>
+<p>ScalaScriptとしてのAmmonite</p>
+<ul>
+  <li>「スクリプトもScalaで書きたい！」というScala大好きな方に!</li>
+  <li>実際型があると安心!</li>
+  <li>IntelliJもAmmoniteScriptをサポートしてるよ</li>
+</ul>
+<p>全てをScalaで実装する未来がくるかも…?</p>
+<h2>おまけ (時間があれば)<a id="sec-1-10" name="sec-1-10"></a></h2>
+<ul>
+  <li>Ammoniteの実装を覗く</li>
+</ul></div></body></html>
