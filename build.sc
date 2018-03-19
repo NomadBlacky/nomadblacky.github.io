@@ -30,12 +30,17 @@ def main() = {
 
   // Write index page.
   write.over(pwd/"index.html", indexPageBuilder(pwd/"index.md").rawString)
+  println(s"write: ${pwd/"index.html"}")
 
   // Write blogs list page.
   write.over(pwd/'pages/"blogs.html", postsListPageBuilder(posts, pagesDir).rawString)
+  println(s"write: ${pwd/'pages/"blogs.html"}")
 
   // Write blog view page.
-  posts.foreach(p => write.over(p.dest, postViewPageBuilder(p).rawString))
+  posts.foreach { p =>
+    write.over(p.dest, postViewPageBuilder(p).rawString)
+    println(s"write: ${p.dest}")
+  }
 
   println("Complete!")
 }
