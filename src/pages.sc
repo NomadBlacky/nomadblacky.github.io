@@ -46,19 +46,20 @@ case class BasicPageImpl(
   content: Seq[PageContent]
 ) extends BasicPage
 
-
 // Page contents
 val globalHeader = header(
-  div(
-    ul(
-      li(
-        a(href:="/")(
-          p("nomadblacky.github.io")
-        )
-      ),
-      li(
-        a(href:="pages/blogs.html")(
-          p("Blogs")
+  tags2.nav(
+    cls:="navbar navbar-expand-lg navbar-light bg-light",
+    div(
+      a(cls:="navbar-brand", href:="/")("nomadblacky.github.io"),
+      cls:="collapse navbar-collapse",
+      ul(
+        cls:="navbar-nav",
+        li(
+          cls:="nav-item",
+          a(cls:="nav-link", href:="pages/blogs.html")(
+            p("Blogs")
+          )
         )
       )
     )
